@@ -1,0 +1,31 @@
+﻿.media-img {
+    max-height: 500px;
+    max-width: 500px;
+    border-radius: 6px;
+    margin: 10px 30px 20px 10px;
+}
+
+.original-price {
+    text-decoration: line-through;
+}
+
+.media-body {
+    margin-top: 30px
+
+}
+
+.media-img-wrapper {
+    max-height: 500px;
+    max-width: 500px;
+    text-align: center;
+}
+
+@media (max-width: 1023.98px) {
+    .media {
+        flex-direction: column;
+    }
+    .media-img-wrapper {
+        width: 100%;
+        height: auto;
+    }
+}
