@@ -49,7 +49,7 @@ namespace BlazorEcommerce.Server.Services.AuthService
                 return new ServiceResponse<int> 
                 {
                     Success = false,
-                    Message = "User alredy exists" 
+                    Message = "Email is already in use"
                 };
             }
 
@@ -98,10 +98,10 @@ namespace BlazorEcommerce.Server.Services.AuthService
 
         private string CreateToken(User user)
         {
-            List<Claim> claims = new List<Claim>();
+            List<Claim> claimsCreated = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
-                new Claim(ClaimTypes.Name, user.Email);
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Email)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
@@ -109,7 +109,7 @@ namespace BlazorEcommerce.Server.Services.AuthService
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
-                    claims: claims,
+                    claims: claimsCreated,
                     expires: DateTime.Now.AddDays(1),
                     signingCredentials: creds
                 );
@@ -117,6 +117,7 @@ namespace BlazorEcommerce.Server.Services.AuthService
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
-        }   
+        }
+
     }
 }
